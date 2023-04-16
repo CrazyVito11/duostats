@@ -27,8 +27,8 @@ export async function fetchDataFromXpSummariesApi(userId) {
 
 export function getDataFromXpSummariesApiResponse(apiResponse) {
     let totalTimeSpend = 0;
-    let sessionCount = 0;
-    let frozenCount = 0;
+    let sessionCount   = 0;
+    let frozenCount    = 0;
 
     apiResponse.summaries.forEach((summary) => {
         totalTimeSpend += summary.totalSessionTime;
@@ -39,9 +39,9 @@ export function getDataFromXpSummariesApiResponse(apiResponse) {
         }
     });
 
-    const totalDayCount = apiResponse.summaries.length;
+    const totalDayCount       = apiResponse.summaries.length;
     const totalTimeSpendHours = totalTimeSpend / 60 / 60;
-    const mostRecentDay = apiResponse.summaries.find((summary) => summary.totalSessionTime > 0);
+    const mostRecentDay       = apiResponse.summaries.find((summary) => summary.totalSessionTime > 0);
 
     return {
         totalDayCount,

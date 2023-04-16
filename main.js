@@ -8,7 +8,7 @@ import {
 
 function displayStatsBySummaryData(summaryData) {
   const wrapperElement = document.getElementById('results_output');
-  const outputElement = wrapperElement.querySelector('p');
+  const outputElement  = wrapperElement.querySelector('p');
 
   wrapperElement.style.display = 'block';
 
@@ -18,11 +18,14 @@ function displayStatsBySummaryData(summaryData) {
   outputElement.innerText += `During this time, you used ${summaryData.frozenCount} streak freeze(s).\n`;
 
   if (summaryData.mostRecentDay) {
-    const mostRecentDay = summaryData.mostRecentDay;
-    const mostRecentDayDate = new Date(mostRecentDay.date * 1000);
+    const mostRecentDay         = summaryData.mostRecentDay;
+    const mostRecentDayDate     = new Date(mostRecentDay.date * 1000);
     const dateFormattingOptions = { year: "numeric", month: "2-digit", day: "numeric" };
 
-    outputElement.innerText += `\nOn your most recent active day (${mostRecentDayDate.toLocaleString("nl-NL", dateFormattingOptions)}) you got ${mostRecentDay.gainedXp} XP by doing ${mostRecentDay.numSessions} lesson(s).\n`;
+    const dateFormatted     = mostRecentDayDate.toLocaleString("nl-NL", dateFormattingOptions);
+    const mostRecentDayTime = (mostRecentDay.totalSessionTime / 60).toFixed(2);
+
+    outputElement.innerText += `\nOn your most recent active day (${dateFormatted}) you got ${mostRecentDay.gainedXp} XP by doing ${mostRecentDay.numSessions} lesson(s).\nYou spend ${mostRecentDayTime} minute(s) that day doing lesson(s).\n`;
   }
 }
 
@@ -35,9 +38,9 @@ async function onFetchStatusButtonClick() {
     return;
   }
 
-  const userId = await fetchUserIdFromUsername(username);
+  const userId       = await fetchUserIdFromUsername(username);
   const responseData = await fetchDataFromXpSummariesApi(userId);
-  const summaryData = getDataFromXpSummariesApiResponse(responseData);
+  const summaryData  = getDataFromXpSummariesApiResponse(responseData);
 
   console.log('RAW DATA', responseData);
   console.log('RAW SUMMARY DATA', summaryData);
