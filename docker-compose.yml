@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  backend:
+    container_name: duostats-2023-backend
+    build: ./backend
+    restart: on-failure
+    networks:
+      - default
+      - traefik-reverse-proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik-reverse-proxy"
+      - "traefik.http.routers.duostats-2023-backend.rule=Host(`duostats-2023.localhost`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.duostats-2023-backend.entrypoints=https"
+      - "traefik.http.routers.duostats-2023-backend.tls=true"
+
+  frontend:
+    container_name: duostats-2023-frontend
+    build: ./frontend
+    networks:
+      - default
+      - traefik-reverse-proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik-reverse-proxy"
+      - "traefik.http.routers.duostats-2023-frontend.rule=Host(`duostats-2023.localhost`) && Path(`/`)"
+      - "traefik.http.routers.duostats-2023-frontend.entrypoints=https"
+      - "traefik.http.routers.duostats-2023-frontend.tls=true"
+
+# You can find the Traefik reverse proxy container on GitHub
+# https://github.com/CrazyVito11/traefik-reverse-proxy
+networks:
+  traefik-reverse-proxy:
+    name: traefik-reverse-proxy
+    external: true
