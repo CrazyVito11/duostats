@@ -15,16 +15,18 @@ services:
       - "traefik.http.routers.duostats-2023-backend.entrypoints=https"
       - "traefik.http.routers.duostats-2023-backend.tls=true"
 
+  # TODO: Make the domain based on an .env variable?
   frontend:
     container_name: duostats-2023-frontend
     build: ./frontend
+    restart: on-failure
     networks:
       - default
       - traefik-reverse-proxy
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=traefik-reverse-proxy"
-      - "traefik.http.routers.duostats-2023-frontend.rule=Host(`duostats-2023.localhost`) && Path(`/`)"
+      - "traefik.http.routers.duostats-2023-frontend.rule=Host(`duostats-2023.localhost`) && !PathPrefix(`/api`)"
       - "traefik.http.routers.duostats-2023-frontend.entrypoints=https"
       - "traefik.http.routers.duostats-2023-frontend.tls=true"
 

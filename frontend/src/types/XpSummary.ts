@@ -8,4 +8,4 @@ export default interface XpSummary {
     dailyGoalXp: number
     numSessions: number
     totalSessionTime: number
-};
+}

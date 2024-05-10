@@ -1,48 +1,14 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="/duo.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Duostats</title>
   </head>
-  <body>
-    <section style="display: flex; flex-direction: column; margin: 0 auto;">
-        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="275" height="70" style="margin: 0 auto;">
-            <g id="g3" style="fill:none;stroke:#78c800;stroke-width:9px">
-                <path d="m 34,0 0,30 a 14.5,14.5 1 1 0 -29,0 14.5,14.5 1 1 0 29,0 z" id="d"/>
-                <path d="m 70,12 0,21 a 11.5,11.5 0 0 1 -23,0 l 0,-21" id="u"/>
-                <path d="m 111,30 a 14.5,14.5 0 1 0 -29,0 14.5,14.5 0 0 0 29,0 z" id="o1"/>
-                <path d="m 124,0 0,33 a 11,11 0 0 0 11,11 l 7,0" id="l"/>
-                <path d="m 151,14 0,35" id="i"/>
-                <path d="m 155.5,6 a 4.5,4.5 0 0 1 -9,0 4.5,4.5 0 1 1 9,0 z" id="i." style="fill:#78c800;stroke:none"/>
-                <path d="m 188,49 0,-22 a 11,11 0 1 0 -22,0 l 0,22" id="n"/>
-                <path d="m 229,30 a 14.5,14.5 0 0 1 -29,0 14.5,14.5 0 1 1 29,0 l 0,20 a 14.5,14.5 0 0 1 -25,11" id="g"/>
-                <path d="m 270,30 a 14.5,14.5 0 1 0 -29,0 14.5,14.5 0 0 0 29,0 z" id="o2"/>
-            </g>
-        </svg>
+  <body class="relative bg-slate-900">
+    <div id="app" class="min-w-screen min-h-screen flex"></div>
 
-        <section style="display: flex; flex-direction: column; width: 100%; max-width: 250px; margin: 1rem auto;">
-            <label for="user_name_input">Duolingo Username:</label>
-            <input id="user_name_input" type="text" placeholder="Username">
-            <small style="color: #AAA;">Please make sure it's your username and not your profile name!</small>
-        </section>
-
-        <button
-            id="button_fetch_status"
-            style="margin-left: auto; margin-right: auto;"
-        >
-            Fetch stats
-        </button>
-
-        <section
-            id="results_output"
-            style="display: none; margin-top: 1rem; padding: 1rem; border: 1px solid #747bff; border-radius: 5px;"
-        >
-            <p style="margin: 0;"></p>
-        </section>
-    </section>
-
-    <script type="module" src="/main.js"></script>
+    <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

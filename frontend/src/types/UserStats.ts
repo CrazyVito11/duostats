@@ -1,6 +1,11 @@
-import type XpSummary from "./XpSummary";
+import type XpSummary from './XpSummary';
 
-export default interface UserStatsData {
+export default interface UserStats {
+    userId: number,
+    name: string,
+    username: string,
+    streak: number,
+    totalXp: number,
     totalDayCount: number,
     totalTimeSpend: number,
     totalTimeSpendHours: number,
@@ -8,4 +13,4 @@ export default interface UserStatsData {
     mostRecentDayDateFormatted: string,
     sessionCount: number,
     frozenCount: number
-};
+}

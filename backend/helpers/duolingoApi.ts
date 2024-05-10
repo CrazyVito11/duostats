@@ -1,6 +1,10 @@
+import type BasicUserData from "../types/BasicUserData";
+import type UserStatsData from "../types/UserStatsData";
+import type XpSummariesResponse from "../types/XpSummariesResponse";
+import type XpSummary from "../types/XpSummary";
 
-export async function fetchUserIdFromUsername(username: string): Promise<number> {
-    const response = await fetch(`https://www.duolingo.com/2017-06-30/users?username=${username}&fields=users%7Bid,name,username%7D`)
+export async function fetchBasicUserDataFromUsername(username: string): Promise<BasicUserData> {
+    const response = await fetch(`https://www.duolingo.com/2017-06-30/users?username=${username}&fields=users%7Bid,name,username,streak,totalXp%7D`)
 
     if (! response.ok) {
         throw new Error('Unable to fetch the User Data');
@@ -12,7 +16,7 @@ export async function fetchUserIdFromUsername(username: string): Promise<number>
         throw new Error('User not found');
     }
 
-    return jsonData.users[0].id;
+    return jsonData.users[0];
 }
 
 export async function fetchDataFromXpSummariesApi(userId: number): Promise<XpSummariesResponse> {
@@ -26,9 +30,10 @@ export async function fetchDataFromXpSummariesApi(userId: number): Promise<XpSum
 }
 
 export function getUserStatsDataFromXpSummaries(summaries: Array<XpSummary>): UserStatsData {
-    let totalTimeSpend = 0;
-    let sessionCount   = 0;
-    let frozenCount    = 0;
+    let mostRecentDayDateFormatted = 'Never';
+    let totalTimeSpend             = 0;
+    let sessionCount               = 0;
+    let frozenCount                = 0;
 
     summaries.forEach((summary: XpSummary) => {
         totalTimeSpend += summary.totalSessionTime;
@@ -43,12 +48,20 @@ export function getUserStatsDataFromXpSummaries(summaries: Array<XpSummary>): Us
     const totalTimeSpendHours = totalTimeSpend / 60 / 60;
     const mostRecentDay       = summaries.find((summary: XpSummary) => summary.totalSessionTime > 0);
 
+    if (mostRecentDay) {
+        const mostRecentDayDate = new Date(mostRecentDay.date * 1000);
+        const dateFormattingOptions: Intl.DateTimeFormatOptions = { year: "numeric", month: "2-digit", day: "2-digit" };
+
+        mostRecentDayDateFormatted = mostRecentDayDate.toLocaleString("nl-NL", dateFormattingOptions);
+    }
+
     return {
         totalDayCount,
         totalTimeSpend,
         totalTimeSpendHours,
         mostRecentDay,
+        mostRecentDayDateFormatted,
         sessionCount,
         frozenCount
-    }
+    };
 }
