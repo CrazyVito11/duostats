@@ -6,3 +6,4 @@ Simple website that gets some more detailed stats from Duolingo.
 
 ## Setup (Production)
 **TODO:** Document Docker setup steps
+**TODO:** Add instructions about the `.env` file and overriding the base URL
