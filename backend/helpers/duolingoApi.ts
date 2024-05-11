@@ -3,7 +3,7 @@ import type UserStatsData from "../types/UserStatsData";
 import type XpSummariesResponse from "../types/XpSummariesResponse";
 import type XpSummary from "../types/XpSummary";
 
-export async function fetchBasicUserDataFromUsername(username: string): Promise<BasicUserData> {
+export async function fetchBasicUserDataFromUsername(username: string): Promise<BasicUserData | null> {
     const response = await fetch(`https://www.duolingo.com/2017-06-30/users?username=${username}&fields=users%7Bid,name,username,streak,totalXp%7D`)
 
     if (! response.ok) {
@@ -13,7 +13,7 @@ export async function fetchBasicUserDataFromUsername(username: string): Promise<
     const jsonData = await response.json();
 
     if (! jsonData.users[0]) {
-        throw new Error('User not found');
+        return null;
     }
 
     return jsonData.users[0];

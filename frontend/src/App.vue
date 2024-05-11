@@ -38,6 +38,12 @@
           <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
         </svg>
       </button>
+
+      <small
+          v-if="errorMessage"
+          v-text="errorMessage"
+          class="text-sm text-red-500 mt-2"
+      ></small>
     </section>
 
     <section v-if="! isFetchingStatsData && userStatsData" class="w-full flex flex-col">
@@ -61,13 +67,15 @@
 
 <script setup lang="ts">
 import type UserStatsType from './types/UserStats';
+import type ApiErrorResponse from './types/ApiErrorResponse';
 import { computed, ref, onMounted } from 'vue';
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import DuolingoLogo from './components/logos/DuolingoLogo.vue';
 import GithubLogo from './components/logos/GithubLogo.vue';
 import UserStats from './components/UserStats.vue';
 
 const isFetchingStatsData = ref<boolean>(false);
+const errorMessage = ref<string|null>(null);
 const userStatsData = ref<UserStatsType|null>(null);
 const usernameInput = ref<string>('');
 
@@ -77,11 +85,17 @@ const fetchUserStats = () => {
   }
 
   isFetchingStatsData.value = true;
+  errorMessage.value = null;
   userStatsData.value = null;
 
   axios.get(`/api/stats/${usernameInput.value}`)
-  .then((response: AxiosResponse) => {
+  .then((response: AxiosResponse<UserStatsType>) => {
     userStatsData.value = response.data;
+  })
+  .catch((error: AxiosError<ApiErrorResponse>) => {
+    const message = error.response?.data.message;
+
+    errorMessage.value = message ? message : 'An unknown error occurred';
   })
   .finally(() => {
     isFetchingStatsData.value = false;

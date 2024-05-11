@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import {
     fetchBasicUserDataFromUsername,
     fetchDataFromXpSummariesApi,
@@ -7,26 +7,38 @@ import {
 
 const router = express.Router();
 
-router.get('/stats/:username', async (req: Request, res: Response) => {
-    const basicUserData = await fetchBasicUserDataFromUsername(req.params.username);
-    const xpSummaries = await fetchDataFromXpSummariesApi(basicUserData.id);
-    const userStats = getUserStatsDataFromXpSummaries(xpSummaries.summaries);
+router.get('/stats/:username', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const basicUserData = await fetchBasicUserDataFromUsername(req.params.username);
 
-    // TODO: Catch errors and return them properly to the client
-    res.status(200).send({
-        userId: basicUserData.id,
-        name: basicUserData.name,
-        username: basicUserData.username,
-        streak: basicUserData.streak,
-        totalXp: basicUserData.totalXp,
-        totalDayCount: userStats.totalDayCount,
-        totalTimeSpend: userStats.totalTimeSpend,
-        totalTimeSpendHours: userStats.totalTimeSpendHours,
-        mostRecentDay: userStats.mostRecentDay,
-        mostRecentDayDateFormatted: userStats.mostRecentDayDateFormatted,
-        sessionCount: userStats.sessionCount,
-        frozenCount: userStats.frozenCount,
-    });
+        if (! basicUserData) {
+            res.status(404).send({
+                message: 'The requested user doesn\'t exist'
+            });
+
+            return;
+        }
+
+        const xpSummaries = await fetchDataFromXpSummariesApi(basicUserData.id);
+        const userStats = getUserStatsDataFromXpSummaries(xpSummaries.summaries);
+
+        res.status(200).send({
+            userId: basicUserData.id,
+            name: basicUserData.name,
+            username: basicUserData.username,
+            streak: basicUserData.streak,
+            totalXp: basicUserData.totalXp,
+            totalDayCount: userStats.totalDayCount,
+            totalTimeSpend: userStats.totalTimeSpend,
+            totalTimeSpendHours: userStats.totalTimeSpendHours,
+            mostRecentDay: userStats.mostRecentDay,
+            mostRecentDayDateFormatted: userStats.mostRecentDayDateFormatted,
+            sessionCount: userStats.sessionCount,
+            frozenCount: userStats.frozenCount,
+        });
+    } catch (e) {
+        next(e);
+    }
 });
 
 export default router;
