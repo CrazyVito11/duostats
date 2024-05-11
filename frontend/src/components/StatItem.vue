@@ -1,5 +1,5 @@
 <template>
-    <article class="flex flex-row flex-grow basis-0 items-center justify-center">
+    <article class="flex flex-row items-center justify-center">
         <section class="flex h-10 w-10 items-center justify-center">
             <slot name="icon"></slot>
         </section>

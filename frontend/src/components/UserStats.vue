@@ -1,7 +1,7 @@
 <template>
     <section class="flex flex-col w-full">
         <h2 class="text-2xl font-semibold text-white mb-2">General user info</h2>
-        <section class="flex flex-col md:flex-row">
+        <section class="grid grid-cols-2 md:grid-cols-4 gap-4">
             <StatItem
                 name="Total days"
                 :value="userStatsData.totalDayCount"
@@ -42,7 +42,7 @@
         <h2 class="text-2xl font-semibold text-white mt-6 mb-2">Most recent day</h2>
         <section
             v-if="userStatsData.mostRecentDay"
-            class="flex flex-col md:flex-row"
+            class="grid grid-cols-2 md:grid-cols-4 gap-4"
         >
             <StatItem
                 name="Date"
