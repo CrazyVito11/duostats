@@ -5,7 +5,10 @@ services:
     container_name: duostats-2023-backend
     build:
       context: ./backend
-      dockerfile: production.Dockerfile
+      dockerfile: development.Dockerfile
+    volumes:
+      - ./backend:/app:cached
+      - ./backend/node_modules:/app/node_modules:delegated
     restart: on-failure
     networks:
       - default
@@ -21,7 +24,10 @@ services:
     container_name: duostats-2023-frontend
     build:
       context: ./frontend
-      dockerfile: production.Dockerfile
+      dockerfile: development.Dockerfile
+    volumes:
+      - ./frontend:/app:cached
+      - ./frontend/node_modules:/app/node_modules:delegated
     restart: on-failure
     networks:
       - default
