@@ -35,6 +35,8 @@ router.get('/stats/:username', async (req: Request, res: Response, next: NextFun
             mostRecentDayDateFormatted: userStats.mostRecentDayDateFormatted,
             sessionCount: userStats.sessionCount,
             frozenCount: userStats.frozenCount,
+            streakLostCount: userStats.streakLostCount,
+            streakRepairedCount: userStats.streakRepairedCount,
         });
     } catch (e) {
         next(e);

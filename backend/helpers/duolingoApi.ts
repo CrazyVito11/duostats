@@ -25,7 +25,7 @@ export async function fetchDataFromXpSummariesApi(userId: number): Promise<XpSum
     if (! response.ok) {
         throw new Error('Unable to fetch the XP summary');
     }
-  
+
     return await response.json();
 }
 
@@ -34,6 +34,8 @@ export function getUserStatsDataFromXpSummaries(summaries: Array<XpSummary>): Us
     let totalTimeSpend             = 0;
     let sessionCount               = 0;
     let frozenCount                = 0;
+    let streakLostCount            = 0;
+    let streakRepairedCount        = 0;
 
     summaries.forEach((summary: XpSummary) => {
         totalTimeSpend += summary.totalSessionTime;
@@ -41,6 +43,14 @@ export function getUserStatsDataFromXpSummaries(summaries: Array<XpSummary>): Us
 
         if (summary.frozen) {
             frozenCount++;
+        }
+
+        if (! summary.streakExtended && ! summary.frozen) {
+            streakLostCount++;
+        }
+
+        if (summary.repaired) {
+            streakRepairedCount++;
         }
     });
 
@@ -62,6 +72,8 @@ export function getUserStatsDataFromXpSummaries(summaries: Array<XpSummary>): Us
         mostRecentDay,
         mostRecentDayDateFormatted,
         sessionCount,
-        frozenCount
+        frozenCount,
+        streakLostCount,
+        streakRepairedCount,
     };
 }

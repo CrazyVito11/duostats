@@ -4,6 +4,16 @@ Simple website that gets some more detailed stats from Duolingo.
 <img src="./assets/ui_preview.png" alt="Screenshot of the Duostats application" width="500" />
 
 
+## Known issues
+There are a couple of known issues that have a very minimal impact, but are reported here.
+
+- An unofficial icon is used for the streak repaired statistic due to a lack of the original in SVG format.
+    - If you have the official icon in SVG format, then please let me know or create a pull request with the unofficial icon replaced.
+- The streak repaired statistic might be higher than the actual amount that you used.
+    - We don't know the real reason, but our best guess is that Duolingo marks the streak as repaired after an outage.
+    - We are unsure if we can resolve this issue in the future and for this reason this warning has also been implemented on the site itself.
+
+
 ## Setup
 To setup an environment for general use, you need to follow these steps:
 

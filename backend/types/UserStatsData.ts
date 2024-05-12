@@ -7,5 +7,7 @@ export default interface UserStatsData {
     mostRecentDay?: XpSummary,
     mostRecentDayDateFormatted: string,
     sessionCount: number,
-    frozenCount: number
+    frozenCount: number,
+    streakLostCount: number,
+    streakRepairedCount: number,
 };

@@ -7,16 +7,16 @@
                 :value="userStatsData.totalDayCount"
             >
                 <template v-slot:icon>
-                    <CalendarIcon class="h-full"></CalendarIcon>
+                    <CalendarIcon class="w-full my-auto"></CalendarIcon>
                 </template>
             </StatItem>
 
             <StatItem
-                name="Streak"
-                :value="userStatsData.streak"
+                name="Lesson(s)"
+                :value="userStatsData.sessionCount"
             >
                 <template v-slot:icon>
-                    <StreakIcon class="h-full"></StreakIcon>
+                    <LessonIcon class="w-full my-auto"></LessonIcon>
                 </template>
             </StatItem>
 
@@ -25,7 +25,7 @@
                 :value="userStatsData.totalXp"
             >
                 <template v-slot:icon>
-                    <XpIcon class="h-full"></XpIcon>
+                    <XpIcon class="w-full my-auto"></XpIcon>
                 </template>
             </StatItem>
 
@@ -34,7 +34,44 @@
                 :value="secondsToFormattedString(userStatsData.totalTimeSpend)"
             >
                 <template v-slot:icon>
-                    <ClockIcon class="h-full"></ClockIcon>
+                    <ClockIcon class="w-full my-auto"></ClockIcon>
+                </template>
+            </StatItem>
+
+            <StatItem
+                name="Streak"
+                :value="userStatsData.streak"
+            >
+                <template v-slot:icon>
+                    <StreakIcon class="w-full my-auto"></StreakIcon>
+                </template>
+            </StatItem>
+
+            <StatItem
+                name="Freezes"
+                :value="userStatsData.frozenCount"
+            >
+                <template v-slot:icon>
+                    <StreakFreezeIcon class="w-full my-auto"></StreakFreezeIcon>
+                </template>
+            </StatItem>
+
+            <StatItem
+                name="Lost"
+                :value="userStatsData.streakLostCount"
+            >
+                <template v-slot:icon>
+                    <StreakLostIcon class="w-full my-auto"></StreakLostIcon>
+                </template>
+            </StatItem>
+
+            <StatItem
+                name="Repaired"
+                :value="userStatsData.streakRepairedCount"
+                :tooltip="'This number might be higher than the actual repairs that you used yourself.\nMy best guess is that Duolingo marks the streak as repaired after an outage.'"
+            >
+                <template v-slot:icon>
+                    <StreakRepairedIcon class="w-full my-auto"></StreakRepairedIcon>
                 </template>
             </StatItem>
         </section>
@@ -49,7 +86,7 @@
                 :value="userStatsData.mostRecentDayDateFormatted"
             >
                 <template v-slot:icon>
-                    <CalendarIcon class="h-full"></CalendarIcon>
+                    <CalendarIcon class="w-full my-auto"></CalendarIcon>
                 </template>
             </StatItem>
 
@@ -58,7 +95,7 @@
                 :value="secondsToFormattedString(userStatsData.mostRecentDay.totalSessionTime)"
             >
                 <template v-slot:icon>
-                    <ClockIcon class="h-full"></ClockIcon>
+                    <ClockIcon class="w-full my-auto"></ClockIcon>
                 </template>
             </StatItem>
 
@@ -67,7 +104,7 @@
                 :value="userStatsData.mostRecentDay.numSessions"
             >
                 <template v-slot:icon>
-                    <LessonIcon class="h-full"></LessonIcon>
+                    <LessonIcon class="w-full my-auto"></LessonIcon>
                 </template>
             </StatItem>
 
@@ -76,7 +113,7 @@
                 :value="userStatsData.mostRecentDay.gainedXp"
             >
                 <template v-slot:icon>
-                    <XpIcon class="h-full"></XpIcon>
+                    <XpIcon class="w-full my-auto"></XpIcon>
                 </template>
             </StatItem>
         </section>
@@ -88,6 +125,9 @@ import { defineProps } from 'vue';
 import { secondsToFormattedString } from '../helpers/timeHelper';
 import type UserStats from '../types/UserStats';
 import StreakIcon from './icons/StreakIcon.vue';
+import StreakFreezeIcon from './icons/StreakFreezeIcon.vue';
+import StreakLostIcon from './icons/StreakLostIcon.vue';
+import StreakRepairedIcon from './icons/StreakRepairedIcon.vue';
 import XpIcon from './icons/XpIcon.vue';
 import CalendarIcon from './icons/CalendarIcon.vue';
 import ClockIcon from './icons/ClockIcon.vue';
