@@ -116,6 +116,8 @@ onMounted(() => {
 
   if (urlUsername) {
     usernameInput.value = urlUsername;
+
+    fetchUserStats();
   }
 });
 </script>
