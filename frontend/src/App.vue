@@ -57,7 +57,7 @@
 
   <section class="absolute bottom-5 right-5">
       <a
-          href="https://github.com/CrazyVito11/duostats-2023"
+          href="https://github.com/CrazyVito11/duostats"
           title="Visit the Duostats GitHub repository"
           target="_blank"
           class="text-white hover:text-duolingo-blue-light transition-colors"
