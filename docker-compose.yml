@@ -6,7 +6,7 @@ services:
     build:
       context: ./backend
       dockerfile: production.Dockerfile
-    restart: on-failure
+    restart: unless-stopped
     networks:
       - default
       - traefik-reverse-proxy
@@ -22,7 +22,7 @@ services:
     build:
       context: ./frontend
       dockerfile: production.Dockerfile
-    restart: on-failure
+    restart: unless-stopped
     networks:
       - default
       - traefik-reverse-proxy

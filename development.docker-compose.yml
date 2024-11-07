@@ -9,7 +9,7 @@ services:
     volumes:
       - ./backend:/app:cached
       - ./backend/node_modules:/app/node_modules:delegated
-    restart: on-failure
+    restart: unless-stopped
     networks:
       - default
       - traefik-reverse-proxy
@@ -28,7 +28,7 @@ services:
     volumes:
       - ./frontend:/app:cached
       - ./frontend/node_modules:/app/node_modules:delegated
-    restart: on-failure
+    restart: unless-stopped
     networks:
       - default
       - traefik-reverse-proxy
