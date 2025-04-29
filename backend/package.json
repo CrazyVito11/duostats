@@ -1,7 +1,7 @@
 {
   "name": "duostats-backend",
   "version": "1.0.0",
-  "description": "Simple proof of concept website that gets some more detailed stats from Duolingo.",
+  "description": "Simple ExpressJS that gets some more detailed stats from Duolingo.",
   "main": "index.ts",
   "scripts": {
     "build": "npx tsc",
@@ -10,14 +10,14 @@
   },
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.19.2",
-    "mongodb": "^6.6.1",
-    "nodemon": "^3.1.0"
+    "express": "^5.1.0",
+    "mongodb": "^6.16.0",
+    "nodemon": "^3.1.10"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
-    "@types/express": "^4.17.21",
+    "@types/express": "^5.0.1",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^5.4.5"
+    "typescript": "^5.8.3"
   }
 }
