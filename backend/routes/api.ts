@@ -7,9 +7,20 @@ import {
 
 const router = express.Router();
 
-router.get('/stats/:username', async (req: Request, res: Response, next: NextFunction) => {
+const VALID_USERNAME_REGEX = /^(?=.{3,30}$)[A-Za-z0-9_-]+$/;
+
+
+router.get('/stats', async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const basicUserData = await fetchBasicUserDataFromUsername(req.params.username);
+        const username = req.query.username as string|null ?? '';
+
+        if (! VALID_USERNAME_REGEX.test(username)) {
+            res.status(400).send({
+                message: 'The entered username is invalid'
+            });
+        }
+
+        const basicUserData = await fetchBasicUserDataFromUsername(username);
 
         if (! basicUserData) {
             res.status(404).send({
@@ -23,20 +34,8 @@ router.get('/stats/:username', async (req: Request, res: Response, next: NextFun
         const userStats = getUserStatsDataFromXpSummaries(xpSummaries.summaries);
 
         res.status(200).send({
-            userId: basicUserData.id,
-            name: basicUserData.name,
-            username: basicUserData.username,
-            streak: basicUserData.streak,
-            totalXp: basicUserData.totalXp,
-            totalDayCount: userStats.totalDayCount,
-            totalTimeSpend: userStats.totalTimeSpend,
-            totalTimeSpendHours: userStats.totalTimeSpendHours,
-            mostRecentDay: userStats.mostRecentDay,
-            mostRecentDayDateFormatted: userStats.mostRecentDayDateFormatted,
-            sessionCount: userStats.sessionCount,
-            frozenCount: userStats.frozenCount,
-            streakLostCount: userStats.streakLostCount,
-            streakRepairedCount: userStats.streakRepairedCount,
+            basicUserData,
+            userStats,
         });
     } catch (e) {
         next(e);

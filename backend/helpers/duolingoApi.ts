@@ -4,7 +4,21 @@ import type XpSummariesResponse from "../types/XpSummariesResponse";
 import type XpSummary from "../types/XpSummary";
 
 export async function fetchBasicUserDataFromUsername(username: string): Promise<BasicUserData | null> {
-    const response = await fetch(`https://www.duolingo.com/2017-06-30/users?username=${username}&fields=users%7Bid,name,username,streak,totalXp%7D`)
+    const fields = [
+        "id",
+        "name",
+        "username",
+        "streak",
+        "totalXp",
+        "timezone"
+    ];
+
+    const queryParams = new URLSearchParams({
+        username,
+        fields: `users{${fields.join(",")}}`,
+    });
+
+    const response = await fetch(`https://www.duolingo.com/2017-06-30/users?${queryParams.toString()}`);
 
     if (! response.ok) {
         throw new Error('Unable to fetch the User Data');

@@ -4,7 +4,7 @@
         <section class="grid grid-cols-2 md:grid-cols-4 gap-4">
             <StatItem
                 name="Total days"
-                :value="userStatsData.totalDayCount"
+                :value="userStatsData.userStats.totalDayCount"
             >
                 <template v-slot:icon>
                     <CalendarIcon class="w-full my-auto"></CalendarIcon>
@@ -13,7 +13,7 @@
 
             <StatItem
                 name="Lesson(s)"
-                :value="userStatsData.sessionCount"
+                :value="userStatsData.userStats.sessionCount"
             >
                 <template v-slot:icon>
                     <LessonIcon class="w-full my-auto"></LessonIcon>
@@ -22,7 +22,7 @@
 
             <StatItem
                 name="Total XP"
-                :value="userStatsData.totalXp"
+                :value="userStatsData.basicUserData.totalXp"
             >
                 <template v-slot:icon>
                     <XpIcon class="w-full my-auto"></XpIcon>
@@ -31,7 +31,7 @@
 
             <StatItem
                 name="Total time"
-                :value="secondsToFormattedString(userStatsData.totalTimeSpend)"
+                :value="secondsToFormattedString(userStatsData.userStats.totalTimeSpend)"
             >
                 <template v-slot:icon>
                     <ClockIcon class="w-full my-auto"></ClockIcon>
@@ -40,7 +40,7 @@
 
             <StatItem
                 name="Streak"
-                :value="userStatsData.streak"
+                :value="userStatsData.basicUserData.streak"
             >
                 <template v-slot:icon>
                     <StreakIcon class="w-full my-auto"></StreakIcon>
@@ -49,7 +49,7 @@
 
             <StatItem
                 name="Freezes"
-                :value="userStatsData.frozenCount"
+                :value="userStatsData.userStats.frozenCount"
             >
                 <template v-slot:icon>
                     <StreakFreezeIcon class="w-full my-auto"></StreakFreezeIcon>
@@ -58,7 +58,7 @@
 
             <StatItem
                 name="Lost"
-                :value="userStatsData.streakLostCount"
+                :value="userStatsData.userStats.streakLostCount"
             >
                 <template v-slot:icon>
                     <StreakLostIcon class="w-full my-auto"></StreakLostIcon>
@@ -67,7 +67,7 @@
 
             <StatItem
                 name="Repaired"
-                :value="userStatsData.streakRepairedCount"
+                :value="userStatsData.userStats.streakRepairedCount"
                 :tooltip="'This number might be higher than the actual repairs that you used yourself.\nMy best guess is that Duolingo marks the streak as repaired after an outage.'"
             >
                 <template v-slot:icon>
@@ -78,12 +78,12 @@
 
         <h2 class="text-2xl font-semibold text-white mt-6 mb-2">Most recent day</h2>
         <section
-            v-if="userStatsData.mostRecentDay"
+            v-if="userStatsData.userStats.mostRecentDay"
             class="grid grid-cols-2 md:grid-cols-4 gap-4"
         >
             <StatItem
                 name="Date"
-                :value="userStatsData.mostRecentDayDateFormatted"
+                :value="userStatsData.userStats.mostRecentDayDateFormatted"
             >
                 <template v-slot:icon>
                     <CalendarIcon class="w-full my-auto"></CalendarIcon>
@@ -92,7 +92,7 @@
 
             <StatItem
                 name="Time spend"
-                :value="secondsToFormattedString(userStatsData.mostRecentDay.totalSessionTime)"
+                :value="secondsToFormattedString(userStatsData.userStats.mostRecentDay.totalSessionTime)"
             >
                 <template v-slot:icon>
                     <ClockIcon class="w-full my-auto"></ClockIcon>
@@ -101,7 +101,7 @@
 
             <StatItem
                 name="Lesson(s)"
-                :value="userStatsData.mostRecentDay.numSessions"
+                :value="userStatsData.userStats.mostRecentDay.numSessions"
             >
                 <template v-slot:icon>
                     <LessonIcon class="w-full my-auto"></LessonIcon>
@@ -110,7 +110,7 @@
 
             <StatItem
                 name="XP gained"
-                :value="userStatsData.mostRecentDay.gainedXp"
+                :value="userStatsData.userStats.mostRecentDay.gainedXp"
             >
                 <template v-slot:icon>
                     <XpIcon class="w-full my-auto"></XpIcon>

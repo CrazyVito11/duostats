@@ -1,7 +1,7 @@
 <template>
   <section class="m-auto w-full max-w-2xl">
     <section class="px-4 py-6 mt-4 mb-16 bg-slate-800 border border-white/10 rounded-md shadow-md flex flex-col">
-      <DuolingoLogo class="max-w-[275px] w-full px-4 mx-auto mb-4"></DuolingoLogo>
+      <DuolingoLogo class="max-w-[275px] w-full px-4 mx-auto mb-4" />
 
       <section class="flex flex-col w-full max-w-sm mx-auto">
         <fieldset class="flex flex-col mb-4">
@@ -50,31 +50,46 @@
       <section v-if="! isFetchingStatsData && userStatsData" class="w-full flex flex-col">
         <div class="w-full border-t border-white/10 my-4"></div>
 
-        <UserStats :user-stats-data="userStatsData"></UserStats>
+        <UserStats :user-stats-data="userStatsData" />
       </section>
+
+      <AuthenticationModal />
     </section>
   </section>
 
-  <section class="absolute bottom-5 right-5">
+  <section class="absolute bottom-5 right-5 grid grid-cols-2 space-x-2">
+      <a
+          href="#"
+          title="Duolingo authentication"
+          class="text-white hover:text-duolingo-blue-light transition-colors"
+          @click="authStore.authenticationModalIsOpen = true"
+      >
+        <UserIcon class="h-8 w-8" />
+      </a>
       <a
           href="https://github.com/CrazyVito11/duostats"
           title="Visit the Duostats GitHub repository"
           target="_blank"
           class="text-white hover:text-duolingo-blue-light transition-colors"
       >
-        <GithubLogo class="h-8 w-8"></GithubLogo>
+        <GithubLogo class="h-8 w-8" />
       </a>
   </section>
 </template>
 
 <script setup lang="ts">
+import { computed, ref, onMounted } from 'vue';
+import { UserIcon } from '@heroicons/vue/24/solid';
+import axios, { AxiosError, AxiosResponse } from 'axios';
+import { useAuthStore } from './stores/AuthStore';
 import type UserStatsType from './types/UserStats';
 import type ApiErrorResponse from './types/ApiErrorResponse';
-import { computed, ref, onMounted } from 'vue';
-import axios, { AxiosError, AxiosResponse } from 'axios';
 import DuolingoLogo from './components/logos/DuolingoLogo.vue';
 import GithubLogo from './components/logos/GithubLogo.vue';
 import UserStats from './components/UserStats.vue';
+import AuthenticationModal from './components/AuthenticationModal.vue';
+
+const authStore = useAuthStore();
 
 const isFetchingStatsData = ref<boolean>(false);
 const errorMessage = ref<string|null>(null);
@@ -90,18 +105,22 @@ const fetchUserStats = () => {
   errorMessage.value = null;
   userStatsData.value = null;
 
-  axios.get(`/api/stats/${usernameInput.value}`)
-  .then((response: AxiosResponse<UserStatsType>) => {
-    userStatsData.value = response.data;
-  })
-  .catch((error: AxiosError<ApiErrorResponse>) => {
-    const message = error.response?.data.message;
+  const params: Record<string, string> = {
+    username: usernameInput.value,
+  };
 
-    errorMessage.value = message ? message : 'An unknown error occurred';
-  })
-  .finally(() => {
-    isFetchingStatsData.value = false;
-  });
+  axios.get('/api/stats', { params })
+    .then((response: AxiosResponse<UserStatsType>) => {
+      userStatsData.value = response.data;
+    })
+    .catch((error: AxiosError<ApiErrorResponse>) => {
+      const message = error.response?.data.message;
+
+      errorMessage.value = message ? message : 'An unknown error occurred';
+    })
+    .finally(() => {
+      isFetchingStatsData.value = false;
+    });
 };
 
 const usernameIsValid = computed(() => {
