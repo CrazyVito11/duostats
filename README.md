@@ -3,6 +3,11 @@ Simple website that gets some more detailed stats from Duolingo.
 
 <img src="./assets/ui_preview.png" alt="Screenshot of the Duostats application" width="500" />
 
+> [!NOTE]
+> I personally no longer use Duolingo, but I will still accept PR's for this project.
+>
+> Just make sure to also include your account name so I can test the functionality.
+
 
 ## Known issues
 There are a couple of known issues that have a very minimal impact, but are reported here.
